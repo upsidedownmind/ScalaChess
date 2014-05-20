@@ -1,0 +1,4 @@
+ScalaChess
+==========
+
+Scala Chess Game
