@@ -1,23 +1,36 @@
 package chess
  
 import chess.Constantes._
-import scala.collection.immutable.Stream
+import chess.Constantes.TipoDeTrebejo._	
+import chess.Tablero._	
 
-
+// se encarga de crear las piezas y acomodar la posicion inicial del tablero
 object GeneradorDePiezas {
-	import chess.Constantes.TipoDeTrebejo._	
   
-	
+  // valores especiales
+  val _nada = Nada deColor blanco
+  
+  def nada = _nada
+  
+  def posiciones = for ( r <- (1 to 8).reverse; c <- 'a' to 'h') yield (r, c)
+  
+  def determinarColor(pos:Posicion) = if (pos._2.toInt % 2 != 0 && pos._1 % 2 == 0) blanco else negro
+	  
+  // el tablero desde 0
   def tableroInicial:Tablero = { 
-	  
-	  val posiciones = for ( r <- (1 to 8).reverse; c <- 'a' to 'h') yield (r, c)
-	  
-	  def determinarcolor(pos:Posicion) = if (pos._2.toInt % 2 != 0 && pos._1 % 2 == 0) blanco else negro
-	  
-	  formacionInicial zip(posiciones) map( z  => new Escaque( determinarcolor(z._2), z._2 , z._1 ) ) toList
-	}
+	formacionInicial 
+		.zip(posiciones) 
+		.map( z  => new Escaque( determinarColor(z._2), z._2 , z._1 ) ) toList
+   }
+  
+  def tableroEnBlanco:Tablero = {
+    { for (i <- 1 to (8*8)) yield nada } 
+    	.zip(posiciones) 
+    	.map( z  => new Escaque( determinarColor(z._2), z._2 , z._1 ) ) toList
+  }
 	
-  def formacionInicial:List[Trebejo]  =  formacionNegra ++ { for (i <- 1 to (4*4)) yield nada } ++ formacionBlanca 
+  //formaciones iniciales
+  def formacionInicial:List[Trebejo]  =  formacionNegra ++ { for (i <- 1 to (4*8)) yield nada } ++ formacionBlanca 
 	
   def formacionPeones(x:Color):List[Trebejo] =  { for (i <- 1 to 8) yield Peon deColor x } toList
 
@@ -36,11 +49,10 @@ object GeneradorDePiezas {
      ( Alfil deColor blanco ) , ( Caballo deColor blanco ) , ( Torre deColor blanco )
      )
   }
-
-  val _nada = Nada deColor blanco
   
-  def nada = _nada
+  def crear(tipo:TipoDeTrebejo)(implicit color:Color) = tipo deColor color
   
+  //dsl
   implicit def TipoDeTrebejo2TrebejoBuilder(tipo: TipoDeTrebejo): TrebejoBuilder = new TrebejoBuilder(tipo)
 
   class TrebejoBuilder(val tipo: TipoDeTrebejo) {

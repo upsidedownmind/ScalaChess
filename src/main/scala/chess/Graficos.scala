@@ -1,9 +1,10 @@
 package chess
 import chess.Constantes._
+import chess.Tablero._	
 
 object Graficos {
   
-  class Visualizador(val aj:Ajedrez) {
+  class Visualizador(val tablero:Tablero) {
   
     import TipoDeTrebejo._
     
@@ -12,7 +13,7 @@ object Graficos {
       val top = "\n   a b c d e f g h\n  ╔═══════════════╗\n" 
       val btn = "\n  ╚═══════════════╝\n  a b c d e f g h\n" 
   
-      val columnas = aj.tablero.map(_.trebejo).grouped( 8 ) .map( _.map{
+      val columnas = tablero.map(_.trebejo).grouped( 8 ) .map( _.map{
         case Trebejo(Rey, color, _) => Symbols.all(color)('king)
         case Trebejo(Reina, color, _) => Symbols.all(color)('queen)
         case Trebejo(Torre, color, _) => Symbols.all(color)('rook)
@@ -33,8 +34,8 @@ object Graficos {
     
   }
   
-  implicit def ajedres2Visualizador(aj:Ajedrez):Visualizador = new Visualizador( aj )
-  
+  implicit def Ajedres2Visualizador(aj:Ajedrez):Visualizador = new Visualizador( aj.tablero )
+  implicit def Tablero2Visualizador(tablero:Tablero):Visualizador = new Visualizador( tablero )
 }
 
 //draw symbols
