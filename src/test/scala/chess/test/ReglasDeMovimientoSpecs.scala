@@ -17,7 +17,7 @@ class ReglasDeMovimientoSpecs  extends Specification {
       
 	    val tablero = tableroEnBlanco.agregar( "d4", GeneradorDePiezas.crear( TipoDeTrebejo.Peon)   )
 	    
-	    tablero mover( "a2a3" ) must beSuccessfulTry(   )
+	    tablero mover( "d4d5" ) must beSuccessfulTry
     }
     
   }

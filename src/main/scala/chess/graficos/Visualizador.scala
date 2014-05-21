@@ -3,10 +3,21 @@ package chess.graficos
 import chess._
 import TipoDeTrebejo._
 
-class Visualizador(val tablero:Tablero) {
+abstract class Visualizador {
+   def visualizar:String
+}
+
+
+class VisualizadorDeError(val error:Throwable) extends Visualizador {
+  override def visualizar:String = {
+    error.toString()
+  }
+}
+
+class VisualizadorDeTablero(val tablero:Tablero) extends Visualizador {
    
     
-    def visualizar = {
+    override def visualizar:String = {
       
       val top = "\n   a b c d e f g h\n  ╔═══════════════╗\n" 
       val btn = "\n  ╚═══════════════╝\n  a b c d e f g h\n" 

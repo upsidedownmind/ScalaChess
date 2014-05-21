@@ -8,11 +8,7 @@ import chess.tablero._
 
 class ChessSpecs extends Specification {
 
-	"El Ajedrez "  should {
-	  
-	  "dibujarse" in {
-	    
-	    val grafico = """
+	    lazy val graficoInicial = """
    a b c d e f g h
   ╔═══════════════╗
 8 ║♜ ♞ ♝ ♚ ♛ ♝ ♞ ♜║ 8
@@ -27,7 +23,12 @@ class ChessSpecs extends Specification {
   a b c d e f g h
 """
 	      
-	      new Ajedrez().visualizar mustEqual grafico
+	"El Ajedrez "  should {
+	  
+	  "dibujarse" in {
+	    
+	      
+	      new Ajedrez().visualizar mustEqual graficoInicial
 	  }
 	  
 	  "iniciar el juego con 16 piezas" in {
@@ -49,7 +50,7 @@ class ChessSpecs extends Specification {
 	     
 	    val aj = new Ajedrez() 
 	    
-	    aj mover( "a2a3" ) must beSuccessfulTry(   )
+	    aj mover( "a2a3" ) must beSuccessfulTry 
 	    
       }
 	  
