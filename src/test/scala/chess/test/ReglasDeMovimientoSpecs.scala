@@ -2,8 +2,9 @@ package chess.test
 
 import org.specs2.mutable._
 import chess._
-import chess.Constantes._  
-import chess.Movimientos._  
+import chess.graficos._
+import chess.movimientos._
+import chess.tablero._
 
 class ReglasDeMovimientoSpecs  extends Specification {
 

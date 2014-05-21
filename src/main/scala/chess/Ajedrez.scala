@@ -1,15 +1,12 @@
 package chess
-import scala.util.{Try, Success, Failure}
-import chess.Constantes._
-import chess.Movimientos._
-import chess.Tablero._ 
+
+import scala.util.{Try, Success, Failure} 
+import chess.movimientos._
 import scala.util.Failure
   
 // el juego! visto desde afuera..
-class Ajedrez {
-   
-	import Tablero._ 
-	
+class Ajedrez { 
+  
 	//tablero
 	var tablero:Tablero = GeneradorDePiezas.tableroInicial
 	

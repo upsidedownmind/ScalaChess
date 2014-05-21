@@ -1,8 +1,6 @@
 package chess
- 
-import chess.Constantes._
-import chess.Constantes.TipoDeTrebejo._	
-import chess.Tablero._	
+ 	
+import TipoDeTrebejo._
 
 // se encarga de crear las piezas y acomodar la posicion inicial del tablero
 object GeneradorDePiezas {
@@ -12,9 +10,9 @@ object GeneradorDePiezas {
   
   def nada = _nada
   
-  def posiciones = for ( r <- (1 to 8).reverse; c <- 'a' to 'h') yield (r, c)
+  def posiciones = for ( r <- (1 to 8).reverse; c <- 'a' to 'h') yield new Posicion(c, r)
   
-  def determinarColor(pos:Posicion) = if (pos._2.toInt % 2 != 0 && pos._1 % 2 == 0) blanco else negro
+  def determinarColor(pos:Posicion) = if (pos.columna.toInt % 2 != 0 && pos.fila % 2 == 0) blanco else negro
 	  
   // el tablero desde 0
   def tableroInicial:Tablero = { 
