@@ -5,66 +5,33 @@ import chess.Constantes.TipoDeTrebejo._
 import scala.util.Failure
  
 
-case class Trebejo(val tipo:TipoDeTrebejo, color: Color)
-case class Jugador(val nombre:String, val color:Color) {
-  def esDeColor(c:Color) = c == color
-}
-case class Escaque(val color:Color, posicion:Posicion, val trebejo:Trebejo)
 case class Movimiento( val desde:Posicion, val hasta:Posicion )
+case class Trebejo(val tipo:TipoDeTrebejo, val color: Color, val movimientos:Int)
+case class Escaque(val color:Color, val posicion:Posicion, val trebejo:Trebejo){
+  def estaVacio  = trebejo.tipo == Nada
+}
 
 // el juego!
 class Ajedrez {
-  
-	var _jugadores = List[Jugador]()
-	//getter
-	def jugadores:List[Jugador] = _jugadores
+   
 	
 	//tablero
-	var tablero:Tablero = { 
-	  
-	  val posiciones = for ( r <- 1 to 1; c <- 'a' to 'h') yield (r, c)
-	  
-	  GeneradorDePiezas.formacionInicial zip(posiciones) map( z  => new Escaque( blanco, z._2 , z._1 ) ) toList
-	}
+	var tablero:Tablero = GeneradorDePiezas.tableroInicial
 	
 	//proxima jugada
 	var proximoTurno = blanco
-	
-	//registrar jugador
-	def agregarJugador(j:Jugador):Try[Jugador] = j match {
 	  
-	  case Jugador(_, color:Symbol) if (color == blanco || color == negro) =>
-	    
-	    	if (! jugador(color).isEmpty )
-	    	  new Failure(new Exception("El jugador ya existe")) 
-	    	else
-	    		_jugadores =  j :: _jugadores
-	    		new Success(j)
-	    	
-	  case _ => new Failure(new Exception("El jugador no es valido")) 
-		
-	}
-	
-	//buscar jugador
-	def jugador(color:Color) = jugadores find( _.color == color )
-	
 	//conteo de piezas
-	def cantidadDePiezas(j:Option[Jugador]) = j match {
-	  case Some(j) => tablero.foldRight(0)( (e,acc) => if (e.color == j.color) acc+1 else acc  )
-	  case None => 0
-	}
+	def cantidadDePiezas(color:Color) = tablero.foldRight(0)( (e,acc) => if (e.trebejo.color == color && !e.estaVacio ) acc+1 else acc  ) 
 	
 	//quien esta en XY
-	def jugadorEn( en:Posicion ):Option[Jugador] = tablero.find( e => e.posicion == en && e.trebejo.tipo != Nada ) match {
-	  case e:Escaque => jugador(e.trebejo.color)
-	  case _ => None
-	}
+	def trebejoEn( en:Posicion ):Option[Trebejo] = tablero.find( e => e.posicion == en && !e.estaVacio ) map(_.trebejo)
  
 	
 	//moves
 	def mover( mov:Movimiento ):Try[Trebejo] = mov match {
 	  case Movimiento( desde, hasta ) if desde == posicionInvalida || hasta == posicionInvalida =>  "Posicion Invalida"
-	  case Movimiento( desde, hasta ) if  jugadorEn( desde ).fold(false)(_.esDeColor( proximoTurno )) => validarYGenerarMovimiento( Some(mov) ) 
+	  case Movimiento( desde, hasta ) if  trebejoEn( desde ).fold(false)(_.color == proximoTurno) => validarYGenerarMovimiento( Some(mov) ) 
 	  //""//tablero mover(new Movimiento(jugadorEn( desde ), desde, hasta))  
 	  case _ => "Movimiento Invalido"
 	}
@@ -74,16 +41,7 @@ class Ajedrez {
   
 }
  
-//dsl sugar
-object Jugador { 
-	class JugadorSugar(val nombre:String) {
-		def color( color:Symbol ) = new Jugador(nombre, color)	
-	}
-
-	implicit def String2JugadorSugar( nombre:String  ) = new JugadorSugar(nombre)
-	
-  
-}
+//dsl sugar 
 object Movimiento {
   
   private[this] def movimientoSimple( mov:String ) = movimientoInvalido

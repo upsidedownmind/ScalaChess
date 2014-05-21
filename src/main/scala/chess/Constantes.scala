@@ -9,7 +9,7 @@ object Constantes {
     type TipoDeTrebejo = Value
     val Rey, Reina, Alfil, Caballo, Torre, Peon, Nada = Value
     //Nada == escaque en blanco
-  }
+  } 
   
   //+++ sugar:
   
