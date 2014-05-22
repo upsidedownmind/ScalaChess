@@ -1,8 +1,9 @@
 package chess
 
-import scala.util.{Try, Success, Failure} 
+import scala.util.{Try, Success, Failure}
 import chess.movimientos._
 import scala.util.Failure
+import chess.builders.GeneradorDePiezas
   
 // el juego! visto desde afuera..
 class Ajedrez { 

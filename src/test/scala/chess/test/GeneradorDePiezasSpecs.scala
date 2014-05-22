@@ -7,6 +7,7 @@ import chess.movimientos._
 import chess.tablero._
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
+import chess.builders.GeneradorDePiezas
 
 @RunWith(classOf[JUnitRunner])
 class GeneradorDePiezasSpecs extends Specification {

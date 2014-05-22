@@ -4,8 +4,7 @@ import chess._
 import chess.tablero._
 import scala.util.Either
 import scala.util.Failure
-import scala.util.Try
-import chess.GeneradorDePiezas
+import scala.util.Try 
 import chess.movimientos.validaciones._
 
 object ValidacionesDeMovimiento {

@@ -8,6 +8,7 @@ import chess.tablero._
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import TipoDeTrebejo._
+import chess.builders.GeneradorDePiezas
 
 @RunWith(classOf[JUnitRunner])
 class ReglasDeMovimientoSpecs extends Specification {

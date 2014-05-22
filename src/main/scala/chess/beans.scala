@@ -9,8 +9,8 @@ package chess {
 
   object TipoDeTrebejo extends Enumeration {
     type TipoDeTrebejo = Value
-    val Rey, Reina, Alfil, Caballo, Torre, Peon, Nada = Value
-    //Nada == escaque en blanco
+    val Rey, Reina, Alfil, Caballo, Torre, Peon, Ninguno = Value
+    //Ninguno == escaque en blanco
   }
   import TipoDeTrebejo._
 
@@ -19,7 +19,7 @@ package chess {
   }
 
   case class Escaque(val color: Color, val posicion: Posicion, val trebejo: Trebejo) {
-    def estaVacio = trebejo.tipo == Nada
+    def estaVacio = trebejo.tipo == Ninguno
   }
   
 }
