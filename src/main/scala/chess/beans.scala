@@ -2,7 +2,10 @@ package chess {
 
   case class Posicion(val columna: Char, val fila: Int)
 
-  case class Movimiento(val desde: Posicion, val hasta: Posicion)
+  case class Movimiento(val desde: Posicion, val hasta: Posicion) {
+    def distanciaDeColumas = Math.abs( hasta.columna.toInt - desde.columna.toInt ).toInt 
+    def distanciaDeFilas = Math.abs( hasta.fila - desde.fila ).toInt 
+  }
 
   object TipoDeTrebejo extends Enumeration {
     type TipoDeTrebejo = Value

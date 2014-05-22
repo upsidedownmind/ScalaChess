@@ -5,7 +5,10 @@ import chess._
 import chess.graficos._
 import chess.movimientos._
 import chess.tablero._
+import org.junit.runner.RunWith
+import org.specs2.runner.JUnitRunner
 
+@RunWith(classOf[JUnitRunner])
 class ChessSpecs extends Specification {
 
 	    lazy val graficoInicial = """
