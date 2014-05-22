@@ -9,6 +9,7 @@ class Ajedrez {
   
 	//tablero
 	var tablero:Tablero = GeneradorDePiezas.tableroInicial
+	var historicoDeTableros = List[Tablero]()
 	
 	//proxima jugada
 	var colorDelProximoTurno = blanco
@@ -20,6 +21,7 @@ class Ajedrez {
 	  //refresh
 	  if(result.isSuccess) {
 	    colorDelProximoTurno = if (colorDelProximoTurno == blanco) negro else blanco
+	    historicoDeTableros = historicoDeTableros :+ tablero 
 		tablero = result.get
 	  }
 	    
